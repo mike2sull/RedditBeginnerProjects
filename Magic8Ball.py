@@ -16,6 +16,7 @@ Bonus Using whatever module you like, add a gui. Your gui must have:
 
 import random
 import time
+import tkinter as tk
 
 responses = [
     'Yes',
@@ -38,16 +39,31 @@ responses = [
     'Ask again later',
 ]
 
+# Code for the 8 ball
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.grid()
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.inputQuestion = tk.Entry(self)
+        self.inputQuestion.grid(row=0)
+        self.shakeButton = tk.Button(self, text='Shake', command=askQuestion(self.inputQuestion.get()))
+        self.shakeButton.grid(row=1)
+
+
 def shake():
     r = random.randrange(0, len(responses))
     print('Shaking....')
     time.sleep(5)
     print(responses[r])
-    askQuestion()
+    askQuestion(q)
 
-def askQuestion():
+def askQuestion(q):
     try:
-        question = input('What is the knowledge that you seek?  If none, type "q" to quit.')
+        # non-GUI: question = input('What is the knowledge that you seek?  If none, type "q" to quit.')
+        question = q
         if question == 'q':
             quit()
         else:
@@ -55,4 +71,15 @@ def askQuestion():
     except():
         quit()
 
-askQuestion()
+
+ # Code for the GUI
+
+
+
+
+app = Application()
+app.master.title('Magic 8 Ball')
+app.mainloop()
+
+
+# askQuestion()
